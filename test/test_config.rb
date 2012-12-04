@@ -6,6 +6,7 @@ require 'mocha'
 require 'shoulda'
 require 'active_record'
 require 'active_model'
+require 'restclient'
 require 'multitenancy'
 require 'database_cleaner'
 

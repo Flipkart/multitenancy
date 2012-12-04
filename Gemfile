@@ -13,4 +13,5 @@ group :test do
   gem 'activerecord'
   gem 'database_cleaner'
   gem 'sqlite3'
+  gem 'rest-client'
 end

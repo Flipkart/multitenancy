@@ -1,15 +1,16 @@
 require "active_record"
 require "active_model"
-
 require "multitenancy/version"
 require "multitenancy/tenant"
 require "multitenancy/rack/filter"
 require "multitenancy/model_extensions"
+require "multitenancy/rest_client/rest_client.rb"
 
 module Multitenancy
   
   @@tenant_header = 'X_TENANT_ID'
   @@sub_tenant_header = 'X_SUB_TENANT_ID'
+  @@append_headers_to_rest_calls = true
   @@logger = (logger rescue nil) || Logger.new(STDOUT)
 
   class << self
@@ -17,6 +18,7 @@ module Multitenancy
       @@tenant_header = config[:tenant_header]
       @@sub_tenant_header = config[:sub_tenant_header]
       @@logger = config[:logger] if config[:logger]
+      @@append_headers_to_rest_calls = config[:append_headers_to_rest_calls] unless config[:append_headers_to_rest_calls].nil?
     end
     
     def logger
@@ -29,6 +31,10 @@ module Multitenancy
     
     def sub_tenant_header
       @@sub_tenant_header
+    end
+    
+    def append_headers_to_rest_calls?
+      @@append_headers_to_rest_calls
     end
     
     def with_tenant(tenant, &block)
