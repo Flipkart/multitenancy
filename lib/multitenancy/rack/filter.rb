@@ -2,15 +2,14 @@ module Multitenancy
   
   class Filter
     
-    attr_reader :env, :app
-    
-    def initialize(app, env)
+    def initialize(app)
       @app = app
-      @env = fix_headers!(env)
     end
     
-    def call
-      Multitenancy.with_tenant nil do
+    def call(env)
+      fix_headers!(env)
+      tenant = Tenant.new env[Multitenancy.tenant_header], env[Multitenancy.sub_tenant_header]
+      Multitenancy.with_tenant tenant do
         @app.call env
       end
     end

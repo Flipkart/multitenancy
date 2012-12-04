@@ -4,8 +4,8 @@ require File.expand_path('../lib/multitenancy/version', __FILE__)
 Gem::Specification.new do |gem|
   gem.authors       = ["ganeshs"]
   gem.email         = ["ganeshs@flipkart.com"]
-  gem.description   = %q{TODO: Write a gem description}
-  gem.summary       = %q{TODO: Write a gem summary}
+  gem.description   = 'Support multitennacy with active record'
+  gem.summary       = 'Support multitennacy with active record at tenant and sub-tenant level'
   gem.homepage      = ""
 
   gem.files         = `git ls-files`.split($\)

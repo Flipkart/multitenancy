@@ -13,8 +13,8 @@ module Multitenancy
     end
     
     should "call app" do
-      filter = Multitenancy::Filter.new(@app, @env)
-      assert_equal [:status, :headers, :body], filter.call
+      filter = Multitenancy::Filter.new(@app)
+      assert_equal [:status, :headers, :body], filter.call(@env)
     end
   end
 end
