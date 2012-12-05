@@ -22,7 +22,7 @@ This gem expects the tenant and sub-tenant values passed in the request header. 
 
 You use it in your padrino/sinatra application, add the below lines to the config.ru
     
-    Multitenancy.initialize(:tenant_header => 'X_COMPANY_ID', :sub_tenant_header => 'X_USER_ID')
+    Multitenancy.init(:tenant_header => 'X_COMPANY_ID', :sub_tenant_header => 'X_USER_ID')
     Padrino.use Multitenancy::Filter
     
 You can also outside of a filter or in a standalone application,

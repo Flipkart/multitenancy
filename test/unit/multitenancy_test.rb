@@ -4,7 +4,7 @@ module Multitenancy
   class MultiTenancyTest < Test::Unit::TestCase
     
     should "configure headers" do
-      Multitenancy.initialize(:tenant_header => 'tenant_id', :sub_tenant_header => 'seller_id')
+      Multitenancy.init(:tenant_header => 'tenant_id', :sub_tenant_header => 'seller_id')
       assert_equal 'tenant_id', Multitenancy.tenant_header
     end
     

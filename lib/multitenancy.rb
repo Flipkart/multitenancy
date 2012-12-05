@@ -14,7 +14,7 @@ module Multitenancy
   @@logger = (logger rescue nil) || Logger.new(STDOUT)
 
   class << self
-    def initialize(config)
+    def init(config)
       @@tenant_header = config[:tenant_header]
       @@sub_tenant_header = config[:sub_tenant_header]
       @@logger = config[:logger] if config[:logger]

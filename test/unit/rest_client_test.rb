@@ -3,7 +3,7 @@ require File.expand_path(File.dirname(__FILE__) + '/../test_config.rb')
 class RestClientTest < Test::Unit::TestCase
 
   setup do
-    Multitenancy.initialize({:tenant_header => 'X_COMPANY_ID', :sub_tenant_header => 'X_USER_ID'})
+    Multitenancy.init({:tenant_header => 'X_COMPANY_ID', :sub_tenant_header => 'X_USER_ID'})
   end
   
   should "append tenant headers to rest calls within a tenant scope" do
@@ -22,7 +22,7 @@ class RestClientTest < Test::Unit::TestCase
   
   context "no tenant headers in rest calls" do
     setup do
-      Multitenancy.initialize({:tenant_header => 'X_COMPANY_ID', :sub_tenant_header => 'X_USER_ID', :append_headers_to_rest_calls => false})
+      Multitenancy.init({:tenant_header => 'X_COMPANY_ID', :sub_tenant_header => 'X_USER_ID', :append_headers_to_rest_calls => false})
     end
     
     should "not append tenant headers to rest calls within tenant scope" do
