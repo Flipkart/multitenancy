@@ -6,7 +6,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["ganeshs@flipkart.com"]
   gem.description   = 'Support multitennacy with active record'
   gem.summary       = 'Support multitennacy with active record at tenant and sub-tenant level'
-  gem.homepage      = ""
+  gem.homepage      = "https://github.com/Flipkart/multitenancy"
 
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }

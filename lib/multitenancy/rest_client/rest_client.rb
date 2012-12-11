@@ -14,7 +14,6 @@ module RestClient
       private
       def append_tenant_headers(headers)
         headers ||= {}
-        Multitenancy.tenant_header
         if !headers[Multitenancy.tenant_header] && Multitenancy.current_tenant
           headers[Multitenancy.tenant_header] = Multitenancy.current_tenant.tenant_id
         end
