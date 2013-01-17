@@ -60,11 +60,11 @@ class ModelExtensionsTest < ActiveSupport::TestCase
       end
       
       should "not populate tenant and sub tenant when tenant id is not set in context" do
-        Multitenancy.with_tenant Multitenancy::Tenant.new(nil, 'Poorvika') do
+        Multitenancy.with_tenant Multitenancy::Tenant.new(nil, 'abc') do
           model = ModelWithTenantIdAndSubTenantId.new({:name => "test name"})
           model.save!
           assert_nil model.org_id
-          assert_nil model.seller_id
+          assert_equal 'abc', model.seller_id
         end
       end
       
@@ -184,8 +184,8 @@ class ModelExtensionsTest < ActiveSupport::TestCase
       
       should "return all when tenant id is not set in context" do
         Multitenancy.with_tenant Multitenancy::Tenant.new(nil, 'Poorvika') do
-          assert_equal 5, ModelWithTenantIdAndSubTenantId.all.count 
-          assert_equal 4, ModelWithTenantIdAndSubTenantId.where(:name => 'test name').count
+          assert_equal 2, ModelWithTenantIdAndSubTenantId.all.count
+          assert_equal 2, ModelWithTenantIdAndSubTenantId.where(:name => 'test name').count
         end
       end
     end
