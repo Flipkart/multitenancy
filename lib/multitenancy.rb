@@ -5,6 +5,7 @@ require "multitenancy/tenant"
 require "multitenancy/rack/filter"
 require "multitenancy/model_extensions"
 require "multitenancy/rest_client/rest_client.rb"
+require "multitenancy/mq_client/mq_client.rb"
 
 module Multitenancy
   
