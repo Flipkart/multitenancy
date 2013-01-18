@@ -19,7 +19,7 @@ module Multitenancy
         Multitenancy.tenant_field = tenant_id
         Multitenancy.sub_tenant_field = sub_tenant_id
         
-        # set the current_tenant on newly created objects
+          # set the current_tenant on newly created objects
         before_validation Proc.new {|m|
           tenant = Multitenancy.current_tenant
           return unless tenant && tenant.tenant_id
@@ -30,9 +30,9 @@ module Multitenancy
         # set the default_scope to scope to current tenant
         default_scope lambda {
           tenant = Multitenancy.current_tenant
-          if tenant && tenant.tenant_id
+          if tenant
             conditions = {}
-            conditions[tenant_id] = tenant.tenant_id
+            conditions[tenant_id] = tenant.tenant_id if tenant.tenant_id
             conditions[sub_tenant_id] = tenant.sub_tenant_id if sub_tenant_id && tenant.sub_tenant_id
             where(conditions)
           end
@@ -46,7 +46,7 @@ module Multitenancy
             raise "#{tenant_id} is immutable! [Multitenancy]"
           end
         end
-        
+
         # Rewrite accessors to make sub_tenant immutable
         define_method "#{sub_tenant_id}=" do |value|
           if new_record?
@@ -60,8 +60,8 @@ module Multitenancy
       def validates_uniqueness_to_tenant(fields, args ={})
         raise "[Multitenancy] validates_uniqueness_to_tenant: no current tenant" unless respond_to?(:is_scoped_by_tenant?)
         tenant_id = lambda {Multitenancy.tenant_field.downcase}.call
-        sub_tenant_id = Multitenancy.sub_tenant_field ? lambda {Multitenancy.sub_tenant_field.downcase}.call : nil 
-        
+        sub_tenant_id = Multitenancy.sub_tenant_field ? lambda {Multitenancy.sub_tenant_field.downcase}.call : nil
+
         if args[:scope].nil?
           args[:scope] = [tenant_id]
         else

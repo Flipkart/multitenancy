@@ -14,4 +14,6 @@ group :test do
   gem 'database_cleaner'
   gem 'sqlite3'
   gem 'rest-client'
+  gem 'sc-mq'
+  gem 'sc-core'
 end

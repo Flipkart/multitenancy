@@ -21,7 +21,6 @@ module RestClient
         if !headers[Multitenancy.sub_tenant_header] && Multitenancy.current_tenant
           headers[Multitenancy.sub_tenant_header] = Multitenancy.current_tenant.sub_tenant_id
         end
-        
         headers
       end
     end

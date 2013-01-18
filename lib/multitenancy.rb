@@ -5,6 +5,7 @@ require "multitenancy/tenant"
 require "multitenancy/rack/filter"
 require "multitenancy/model_extensions"
 require "multitenancy/rest_client/rest_client.rb"
+require "multitenancy/mq_client/mq_client.rb"
 
 module Multitenancy
   
@@ -38,7 +39,7 @@ module Multitenancy
     end
     
     def with_tenant(tenant, &block)
-      self.logger.debug "Executing the block with the tenant - #{tenant}"
+      self.logger.debug "Executing the block with the tenant - #{tenant.inspect}"
       if block.nil?
         raise ArgumentError, "block required"
       end
@@ -52,12 +53,17 @@ module Multitenancy
     end
     
     def current_tenant=(tenant)
-      self.logger.debug "Setting the current tenant to - #{tenant}"
+      self.logger.debug "Setting the current tenant to - #{tenant.inspect}"
       Thread.current[:tenant] = tenant
     end
     
     def current_tenant
       Thread.current[:tenant]
+    end
+
+    def reset_tenant
+       self.logger.debug "Re-setting the current tenant to nil"
+        Thread.current[:tenant] = nil
     end
   end
 end
