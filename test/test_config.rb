@@ -15,7 +15,9 @@ $:.unshift(ROOT + "/lib")
 
 config = YAML::load(IO.read(File.join(File.dirname(__FILE__), 'database.yml')))
 ActiveRecord::Base.logger = Logger.new(File.join(File.dirname(__FILE__), "debug.log"))
-ActiveRecord::Base.establish_connection(config[ENV['DB'] || 'sqlite'])
+ActiveRecord::Base.configurations[:db1] = config[ENV['DB1'] || 'db1']
+ActiveRecord::Base.configurations[:db2] = config[ENV['DB2'] || 'db2']
+ActiveRecord::Base.establish_connection(ActiveRecord::Base.configurations[:db1])
 
 class ActiveSupport::TestCase
   

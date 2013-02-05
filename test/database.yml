@@ -1,3 +1,6 @@
-sqlite:
+db1:
   adapter: sqlite3
-  database: test/multitenancy.sqlite3
+  database: test/db1.sqlite3
+db2:
+  adapter: sqlite3
+  database: test/db2.sqlite3
