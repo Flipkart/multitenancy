@@ -2,6 +2,10 @@ require File.expand_path(File.dirname(__FILE__) + '/../test_config.rb')
 
 module Multitenancy
   class TenantTest < Test::Unit::TestCase
+    
+    setup do
+      Multitenancy.init(:tenant_header => 'X_TENANT_ID', :sub_tenant_header => 'X_SUB_TENANT_ID')
+    end
   
     should "create tenant" do
       tenant = Tenant.new('tenant_id', 'seller_id')
