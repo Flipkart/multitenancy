@@ -40,6 +40,12 @@ Any active record query executed within the tenant block, will be tenant/sub-ten
 You can pass on the db_type as shared while initializing multitenancy, which is by default set when db_type is not.
 	
 	Multitenancy.init(:tenant_header => 'X_COMPANY_ID', :sub_tenant_header => 'X_USER_ID', :db_type => :shared) 
+	
+In your active record models, add the below line specifying the tenant id column and sub-tenant id column. The sub tenant column is optional
+
+        acts_as_tenant(:tenant_id_column, :sub_tenant_id_column)
+        
+This will ensure that all queries performed on this model will be scoped on tenant and sub-tenant. 
     
 ### Dedicated Instance
 
