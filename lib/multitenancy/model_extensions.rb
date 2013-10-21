@@ -25,7 +25,7 @@ module Multitenancy
           return unless tenant && tenant.tenant_id
           m.send "#{tenant_id}=".to_sym, tenant.tenant_id
           m.send "#{sub_tenant_id}=".to_sym, tenant.sub_tenant_id
-        }, :on => :create
+        }, :on => :save
         
         # set the default_scope to scope to current tenant
         default_scope lambda {

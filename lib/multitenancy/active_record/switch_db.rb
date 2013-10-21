@@ -18,7 +18,7 @@ class ActiveRecord::Base
     def switch_db(db, &block)
       Thread.current[:current_db] = db
       unless ActiveRecord::Base.connection_handler.retrieve_connection_pool(ActiveRecord::Base)
-        ActiveRecord::Base.establish_connection(ActiveRecord::Base.configurations[db])
+        ActiveRecord::Base.establish_connection(DbConfig.get_configuration(db))
       end
       yield
     ensure
