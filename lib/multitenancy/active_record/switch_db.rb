@@ -1,8 +1,8 @@
 class ActiveRecord::Base
   class << self
-   
+
     @@connection_handlers ||= {}
-   
+
     def connection_handler_with_multi_db_support(spec_symbol = nil)
       return @@connection_handlers[spec_symbol] if spec_symbol
       if Thread.current[:current_db]
@@ -11,20 +11,24 @@ class ActiveRecord::Base
         connection_handler_without_multi_db_support
       end
     end
-    
-    alias_method :connection_handler_without_multi_db_support, :connection_handler      
+
+    alias_method :connection_handler_without_multi_db_support, :connection_handler
     alias_method :connection_handler, :connection_handler_with_multi_db_support
 
     def switch_db(db, &block)
       Thread.current[:current_db] = db
       unless ActiveRecord::Base.connection_handler.retrieve_connection_pool(ActiveRecord::Base)
-        ActiveRecord::Base.establish_connection(MultitenancyDbConfig.get_db_configuration(db))
+        raise "[Multitenancy] switch_db requires MultitenancyDbConfig Module" unless defined? MultitenancyDbConfig
+        raise "[Multitenancy] switch_db requires MultitenancyDbConfig.get_db_configuration" unless defined? MultitenancyDbConfig.get_db_configuration
+
+          ActiveRecord::Base.establish_connection(MultitenancyDbConfig.get_db_configuration(db))
+
       end
       yield
     ensure
       ActiveRecord::Base.connection_handler.clear_active_connections! rescue puts "supressing error while clearing connections - #{$!.inspect}"
       Thread.current[:current_db] = nil
     end
-    
+
   end
 end
