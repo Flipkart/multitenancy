@@ -9,7 +9,7 @@ module Multitenancy
     
     module ClassMethods
       
-      def acts_as_tenant(tenant_id, sub_tenant_id=nil)
+      def acts_as_tenant(tenant_id, sub_tenant_id=nil, disable_tenant_scope = false)
         raise "tenant_id can't be nil! [Multitenancy]" unless tenant_id
         
         def self.is_scoped_by_tenant?
@@ -32,7 +32,7 @@ module Multitenancy
           tenant = Multitenancy.current_tenant
           if tenant && tenant.tenant_id
             conditions = {}
-            conditions[tenant_id] = tenant.tenant_id
+            conditions[tenant_id] = tenant.tenant_id unless disable_tenant_scope
             conditions[sub_tenant_id] = tenant.sub_tenant_id if sub_tenant_id && tenant.sub_tenant_id
             where(conditions)
           end
